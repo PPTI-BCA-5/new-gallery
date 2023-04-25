@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QUIZZ</title>
+	<!-- Add the Bootstrap stylesheet -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- selain css dibawah, html ini dibuat oleh chatGPT gaes akowkoawkoaw -->
+    <style>
+        .topcorner {
+            position:absolute;
+            top:25px;
+            right: 75px;
+            text-align: center;
+            display: none;
+        }
+        .topcorner .nilai{
+            font-size: 40px;
+            color:red;
+        }
+        /* Popup container */
+        .popup {
+            position: fixed;
+            top: 45%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            display: inline-block;
+            cursor: pointer;
+            
+        }
+
+        /* The actual popup content */
+        .popup .popuptext {
+            position: absolute;
+            z-index: 1;
+            display: none;
+            background:white;
+            box-shadow: black 5px 5px 20px;
+            width:200px;
+            text-align: center;
+        }
+
+        /* Popup content text */
+        .popup .popuptext p {
+            padding: 10px;
+        }
+        .popup .popuptext .nilai{
+            font-size: 40px;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+	<div class="container">
+		<h2>Arya Rizky</h2>
+        <br>
+        <p>Yuk kita tes seberapa kenal sih kamu sama orang satu ini!</p>
+        <br><br>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="question1">Question 1:</label>
+                    <p>Apa yang apa yang apa yang?</p>
+                    <select class="form-control" id="question1">
+                        <option value="FRU">Option 1</option>
+                        <option value="TRU">Option 2</option>
+                        <option value="XRU">Option 3</option>
+                        <option value="ERU">Option 4</option>
+                        <option value="QRU">Option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question2">Question 2:</label>
+                    <p>Apa yang apa yang apa yang?</p>
+                    <select class="form-control" id="question2">
+                        <option value="DRU">Option 1</option>
+                        <option value="RRU">Option 2</option>
+                        <option value="WRU">Option 3</option>
+                        <option value="TRU">BENER</option>
+                        <option value="PRU">Option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question3">Question 3:</label>
+                    <p>Apa yang apa yang apa yang?</p>
+                    <select class="form-control" id="question3">
+                        <option value="PRU">Option 1</option>
+                        <option value="TRU">Option 2</option>
+                        <option value="KRU">Option 3</option>
+                        <option value="LRU">Option 4</option>
+                        <option value="YRU">Option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question4">Question 4:</label>
+                    <p>Apa yang apa yang apa yang?</p>
+                    <select class="form-control" id="question4">
+                        <option value="YRU">Option 1</option>
+                        <option value="TRU">Option 2</option>
+                        <option value="BRU">Option 3</option>
+                        <option value="MRU">Option 4</option>
+                        <option value="VRU">Option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question5">Question 5:</label>
+                    <p>Apa yang apa yang apa yang?</p>
+                    <select class="form-control" id="question5">
+                        <option value="QRU">Option 1</option>
+                        <option value="VRU">Option 2</option>
+                        <option value="TRU">Option 3</option>
+                        <option value="XRU">Option 4</option>
+                        <option value="ZRU">Option 5</option>
+                    </select>
+                </div>
+                <button onclick="check();" class="btn btn-default">Check Jawaban!</button>
+            </form>
+        </div>
+        <div class="topcorner" id="topcorner">
+            <p>Nilai kamu sebelumnya:</p>
+            <p class="nilai" id="nilai_arya">0!</p>
+        </div>
+	</div>
+    <!-- SCORE POPUP -->
+    <div class="popup" onclick="clearpopup()">
+  
+        <!-- Popup content -->
+        <span class="popuptext" id="myPopup">
+          <p>Mantapp bossq! nilai anda</p>
+          <p class="nilai" id="popup_nilai_arya">X</p>
+        </span>
+        
+    </div>
+
+	<!-- Add the jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Add the Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+
+        // cek nilai sblmnya
+        // TODO: Ganti nilai_arya jadi nilai_[nama] pakai replace all
+        var nilaisblmnya;
+        var popup = document.getElementById("myPopup");
+        var resultprev = document.getElementById("topcorner");
+
+        if (localStorage.getItem('nilai_arya') === null) {
+            nilaisblmnya = 'blm';
+        }else{
+            nilaisblmnya = localStorage.getItem('nilai_arya');
+        }
+
+        // kalo blm ada, ya blm. kalo udh ada ya nampil
+        if(nilaisblmnya === 'blm'){
+            document.getElementById("nilai_arya").innerHTML = "Belum ada!";
+            
+        }else{
+            resultprev.style.display = "block";
+            document.getElementById("nilai_arya").innerHTML = nilaisblmnya;
+            document.getElementById("popup_nilai_arya").innerHTML = nilaisblmnya
+            
+        }
+
+        if (localStorage.getItem("baruselesai") === null) {
+            popup.style.display = "none";
+        }else{
+            popup.style.display = "block";
+            localStorage.removeItem("baruselesai")
+        }
+        
+        // pengecekan jawaban :v ======= JANGAN NYONTEKK ========
+        function check(){
+
+            // declare2
+            const select1 = document.getElementById("question1");
+            const select2 = document.getElementById("question2");
+            const select3 = document.getElementById("question3");
+            const select4 = document.getElementById("question4");
+            const select5 = document.getElementById("question5");
+            const selectedValues = [];
+
+            // konsep: itung jumlah tru, masukin ke selected vales
+            for (const option of select1.options) {
+                if (option.selected) {
+                    selectedValues.push(option.value);
+                }
+            } 
+            for (const option of select2.options) {
+                if (option.selected) {
+                    selectedValues.push(option.value);
+                }
+            } 
+            for (const option of select3.options) {
+                if (option.selected) {
+                    selectedValues.push(option.value);
+                }
+            } 
+            for (const option of select4.options) {
+                if (option.selected) {
+                    selectedValues.push(option.value);
+                }
+            } 
+            for (const option of select5.options) {
+                if (option.selected) {
+                    selectedValues.push(option.value);
+                }
+            } 
+            
+            var count=0;
+            for(let i = 0; i < selectedValues.length; i++){
+                if(selectedValues[i] === 'TRU') count++;
+            }
+
+            // count nilai = jumlah bener x 20 (bener semua = 5x20 = 100)
+            // kalau jumlah soal berubah, tinggal ganti perkaliannya
+
+            var nilai = count * 20;
+            
+            // masukin nilai ke yg membutuhkan, termasuk localstorage
+            localStorage.setItem('nilai_arya',nilai);
+            localStorage.setItem('baruselesai',true);
+        }
+
+        function clearpopup(){
+            popup.style.display = "none";
+        }
+
+    </script>
+</body>
+</html>
